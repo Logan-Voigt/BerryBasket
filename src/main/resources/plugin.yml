@@ -5,5 +5,14 @@ softdepend: [Nexo]
 api-version: '1.21'
 
 commands:
-  basket:
-    permission: berrybasket.give
+  berrybasket:
+    aliases: [bb]
+    usage: /<command> <reload|get|give>
+
+permissions:
+  berrybasket.reload:
+    default: op
+  berrybasket.get:
+    default: op
+  berrybasket.give:
+    default: op
