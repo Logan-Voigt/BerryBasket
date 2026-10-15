@@ -1,0 +1,9 @@
+name: BerryBasket
+version: ${version}
+main: dev.shadow.berrybasket.BerryBasket
+softdepend: [Nexo]
+api-version: '1.21'
+
+commands:
+  basket:
+    permission: berrybasket.give

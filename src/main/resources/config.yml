@@ -1,0 +1,15 @@
+items:
+  item-source: vanilla
+  vanilla-item:
+    name: "<green>Berry Basket"
+    lore: "<!italic><gray>Instantly mines berries from PyroFarming"
+    material: BOWL
+  nexo-item:
+    id: berry_basket
+
+detection:
+  check-below: true
+  check-head-data: false
+  head-textures: []
+
+debug: true
