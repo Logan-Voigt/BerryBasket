@@ -10,7 +10,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.List;
 
-public final class VanillaBasketItem implements BasketProvider {
+public final class VanillaBasketItem implements BasketItem {
     private final NamespacedKey KEY;
     private final String NAME;
     private final String LORE;

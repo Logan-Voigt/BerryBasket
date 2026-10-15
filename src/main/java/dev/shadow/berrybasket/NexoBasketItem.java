@@ -3,7 +3,7 @@ package dev.shadow.berrybasket;
 import com.nexomc.nexo.api.NexoItems;
 import org.bukkit.inventory.ItemStack;
 
-public final class NexoBasketItem implements BasketProvider {
+public final class NexoBasketItem implements BasketItem {
     private final String id;
 
     public NexoBasketItem(String id) {

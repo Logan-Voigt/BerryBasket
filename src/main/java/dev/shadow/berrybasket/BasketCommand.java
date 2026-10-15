@@ -59,7 +59,7 @@ public class BasketCommand implements TabExecutor {
     }
 
     private void giveBasket(Player player) {
-        ItemStack basket = plugin.getProvider().Create();
+        ItemStack basket = plugin.getBasketItem().Create();
         player.getInventory().addItem(basket).values()
                 .forEach(left -> player.getWorld().dropItem(player.getLocation(), left));
     }

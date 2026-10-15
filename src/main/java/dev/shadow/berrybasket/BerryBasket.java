@@ -4,8 +4,10 @@ import org.bukkit.Material;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.List;
+
 public class BerryBasket extends JavaPlugin {
-    BasketProvider provider;
+    BasketItem basketItem;
     @Override
     public void onEnable() {
         getLogger().info("loaded");
@@ -25,15 +27,16 @@ public class BerryBasket extends JavaPlugin {
 
 
         if (wantNexo && hasNexo) {
-            provider = new NexoBasketItem(getConfig().getString("items.nexo-item.id", "berry_basket"));
+            basketItem = new NexoBasketItem(getConfig().getString("items.nexo-item.id", "berry_basket"));
         }
         else {
-            provider = SetupVanillaBasket(wantNexo);
+            basketItem = SetupVanillaBasket(wantNexo);
         }
         boolean debug = getConfig().getBoolean("debug", false);
         boolean checkBelow = getConfig().getBoolean("detection.check-below", true);
         boolean checkHeadData = getConfig().getBoolean("detection.check-head-data", false);
-        getServer().getPluginManager().registerEvents(new BerryBasketListener(provider, checkBelow, checkHeadData, debug), this);
+        List headTextures = getConfig().getList("detection.head-textures");
+        getServer().getPluginManager().registerEvents(new BerryBasketListener(basketItem, checkBelow, checkHeadData, headTextures, debug), this);
     }
 
     public void reload()
@@ -43,7 +46,7 @@ public class BerryBasket extends JavaPlugin {
         setup();
     }
 
-    private BasketProvider SetupVanillaBasket(boolean wantNexo)
+    private BasketItem SetupVanillaBasket(boolean wantNexo)
     {
         String materialName = getConfig().getString("items.vanilla-item.material", "BOWL");
         Material material = Material.matchMaterial(materialName);
@@ -61,7 +64,7 @@ public class BerryBasket extends JavaPlugin {
         return new VanillaBasketItem(this, name, lore, material);
     }
 
-    public BasketProvider getProvider() {
-        return provider;
+    public BasketItem getBasketItem() {
+        return basketItem;
     }
 }
