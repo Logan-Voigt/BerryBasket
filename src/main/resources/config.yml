@@ -1,4 +1,5 @@
 items:
+  # Choices vanilla, nexo (default vanilla)
   item-source: vanilla
   vanilla-item:
     name: "<green>Berry Basket"
@@ -8,8 +9,11 @@ items:
     id: berry_basket
 
 detection:
+  # Checks that an FLOWERING_AZALEA_LEAVE block is below the head
   check-below: true
+  # Not Setup yet
   check-head-data: false
   head-textures: []
 
+# Tells you what block you are hitting when you hit with bowl. (will be used to find textures for pyrofarming)
 debug: true

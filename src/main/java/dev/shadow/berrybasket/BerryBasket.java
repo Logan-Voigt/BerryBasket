@@ -42,7 +42,7 @@ public class BerryBasket extends JavaPlugin {
     public void reload()
     {
         reloadConfig();
-        HandlerList.unregisterAll();
+        HandlerList.unregisterAll(this);
         setup();
     }
 

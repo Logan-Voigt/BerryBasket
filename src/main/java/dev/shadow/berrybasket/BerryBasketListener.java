@@ -47,7 +47,7 @@ public class BerryBasketListener implements Listener {
 
         Block block = event.getBlock();
 
-        if (debug) event.getPlayer().sendMessage("Hit: " + block.getType() + " | texture: " + getSkinHash(block));
+        if (debug) event.getPlayer().sendMessage("Hit: " + block.getType());
 
         if (!isBerryHead(block)) return;
 
