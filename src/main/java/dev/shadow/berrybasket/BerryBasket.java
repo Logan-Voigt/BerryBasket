@@ -36,14 +36,12 @@ public class BerryBasket extends JavaPlugin {
         boolean checkBelow = getConfig().getBoolean("detection.check-below", true);
         boolean checkHeadData = getConfig().getBoolean("detection.check-head-data", false);
         List headTextures = getConfig().getList("detection.head-textures");
-        getServer().getPluginManager().registerEvents(new BerryBasketListener(basketItem, checkBelow, checkHeadData, headTextures, debug), this);
+        getServer().getPluginManager().registerEvents(new BerryBasketListener(basketItem, this), this);
     }
 
     public void reload()
     {
         reloadConfig();
-        HandlerList.unregisterAll(this);
-        setup();
     }
 
     private BasketItem SetupVanillaBasket(boolean wantNexo)

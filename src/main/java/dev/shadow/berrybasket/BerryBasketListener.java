@@ -19,6 +19,8 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.block.Skull;
 import com.destroystokyo.paper.profile.PlayerProfile;
+import org.bukkit.plugin.Plugin;
+
 import java.net.URL;
 
 import java.nio.charset.StandardCharsets;
@@ -27,18 +29,12 @@ import java.util.List;
 
 public class BerryBasketListener implements Listener {
     private final BasketItem basketItem;
-    private final boolean debug;
-    private final boolean checkBelow;
-    private final boolean checkHeadData;
-    private final List berryTextures;
+    private final Plugin plugin;
 
-    public BerryBasketListener(BasketItem basketItem, boolean checkBelow, boolean checkHeadData, List berryTextures, Boolean debug)
+    public BerryBasketListener(BasketItem basketItem, Plugin plugin)
     {
         this.basketItem = basketItem;
-        this.debug = debug;
-        this.checkBelow = checkBelow;
-        this.checkHeadData = checkHeadData;
-        this.berryTextures = berryTextures;
+        this.plugin = plugin;
     }
     @EventHandler(ignoreCancelled = true)
     public void onBlockDamage(BlockDamageEvent event)
@@ -47,7 +43,7 @@ public class BerryBasketListener implements Listener {
 
         Block block = event.getBlock();
 
-        if (debug) event.getPlayer().sendMessage("Hit: " + block.getType());
+        if (plugin.getConfig().getBoolean("debug", false)) event.getPlayer().sendMessage("Hit: " + block.getType());
 
         if (!isBerryHead(block)) return;
 
@@ -59,12 +55,12 @@ public class BerryBasketListener implements Listener {
         Material type = block.getType();
         boolean validSpot = type == Material.PLAYER_HEAD || type == Material.PLAYER_WALL_HEAD;
 
-        if (checkBelow)
+        if (plugin.getConfig().getBoolean("detection.check-below", true))
         {
             validSpot = validSpot && isBlockBelowFloweringAzalea(block);
         }
 
-        if (checkHeadData)
+        if (plugin.getConfig().getBoolean("detection.check-head-data", false))
         {
             // TODO:
         }
