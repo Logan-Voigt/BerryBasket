@@ -20,7 +20,7 @@ public class BasketCommand implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (args.length == 0) {
-            sender.sendRichMessage("<gray>Usage: /" + label + " <reload|get|give>");
+            sender.sendRichMessage("<gray>Usage: /" + label + " <reload|get|give|fix>");
             return true;
         }
 
@@ -53,13 +53,28 @@ public class BasketCommand implements TabExecutor {
                 giveBasket(target);
                 sender.sendRichMessage("<green>Gave a basket to " + target.getName() + ".");
             }
-            default -> sender.sendRichMessage("<red>Unknown subcommand. Use reload, get, or give.");
+            case "fix" -> {
+                if (!sender.hasPermission("berrybasket.fix")) return noPerm(sender);
+                if (!(sender instanceof Player p)) {
+                    sender.sendRichMessage("<red>Only players can use this.");
+                    return true;
+                }
+                boolean fixed = plugin.fixBasketItem(p);
+
+                if (fixed)
+                {
+                    sender.sendRichMessage("<green>Basket fixed.");
+                    return true;
+                }
+                sender.sendRichMessage("<red>You need to hold a basket to fix.");
+            }
+            default -> sender.sendRichMessage("<red>Unknown subcommand. Use reload, get, give, or fix.");
         }
         return true;
     }
 
     private void giveBasket(Player player) {
-        ItemStack basket = plugin.getBasketItem().Create();
+        ItemStack basket = plugin.getBasketItem().create();
         player.getInventory().addItem(basket).values()
                 .forEach(left -> player.getWorld().dropItem(player.getLocation(), left));
     }
@@ -74,7 +89,7 @@ public class BasketCommand implements TabExecutor {
         List<String> out = new ArrayList<>();
 
         if (args.length == 1) {
-            for (String sub : List.of("reload", "get", "give")) {
+            for (String sub : List.of("reload", "get", "give", "fix")) {
                 if (sender.hasPermission("berrybasket." + sub) && sub.startsWith(args[0].toLowerCase())) {
                     out.add(sub);
                 }

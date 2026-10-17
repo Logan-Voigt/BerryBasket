@@ -11,12 +11,12 @@ public final class NexoBasketItem implements BasketItem {
     }
 
     @Override
-    public boolean IsBasket(ItemStack item) {
+    public boolean isBasket(ItemStack item) {
         return id.equals(NexoItems.idFromItem(item));
     }
 
     @Override
-    public ItemStack Create() {
+    public ItemStack create() {
         return NexoItems.itemFromId(id).build();
     }
 }

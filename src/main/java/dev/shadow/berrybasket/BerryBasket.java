@@ -1,10 +1,12 @@
 package dev.shadow.berrybasket;
 
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.event.HandlerList;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.List;
+import com.nexomc.nexo.api.NexoItems;
+import org.bukkit.entity.Player;
 
 public class BerryBasket extends JavaPlugin {
     BasketItem basketItem;
@@ -30,21 +32,19 @@ public class BerryBasket extends JavaPlugin {
             basketItem = new NexoBasketItem(getConfig().getString("items.nexo-item.id", "berry_basket"));
         }
         else {
-            basketItem = SetupVanillaBasket(wantNexo);
+            basketItem = setupVanillaBasket(wantNexo);
         }
-        boolean debug = getConfig().getBoolean("debug", false);
-        boolean checkBelow = getConfig().getBoolean("detection.check-below", true);
-        boolean checkHeadData = getConfig().getBoolean("detection.check-head-data", false);
-        List headTextures = getConfig().getList("detection.head-textures");
         getServer().getPluginManager().registerEvents(new BerryBasketListener(basketItem, this), this);
     }
 
     public void reload()
     {
         reloadConfig();
+        HandlerList.unregisterAll(this);
+        setup();
     }
 
-    private BasketItem SetupVanillaBasket(boolean wantNexo)
+    private BasketItem setupVanillaBasket(boolean wantNexo)
     {
         String materialName = getConfig().getString("items.vanilla-item.material", "BOWL");
         Material material = Material.matchMaterial(materialName);
@@ -54,8 +54,8 @@ public class BerryBasket extends JavaPlugin {
             material = Material.BOWL;
         }
 
-        String name = getConfig().getString("items.vanilla-item.name");
-        String lore = getConfig().getString("items.vanilla-item.lore");
+        String name = getConfig().getString("items.vanilla-item.name", "<green>Berry Basket");
+        String lore = getConfig().getString("items.vanilla-item.lore", "<!italic><gray>Instantly mines berries from PyroFarming");
 
         if (wantNexo) getLogger().warning("item-source is nexo but Nexo isn't installed, falling back to vanilla");
 
@@ -64,5 +64,26 @@ public class BerryBasket extends JavaPlugin {
 
     public BasketItem getBasketItem() {
         return basketItem;
+    }
+
+    public boolean isBasketItem(ItemStack item)
+    {
+        NamespacedKey KEY = new NamespacedKey(this, "berry_basket");
+        boolean hasNexo = getServer().getPluginManager().isPluginEnabled("Nexo");
+        String nexoID = getConfig().getString("items.nexo-item.id", "berry_basket");
+
+        if (item == null || item.getType().isAir()) return false;
+        if (item.getItemMeta().getPersistentDataContainer().has(KEY)) return true;
+
+        if (hasNexo && nexoID.equals(NexoItems.idFromItem(item))) return true;
+
+        return false;
+    }
+    public boolean fixBasketItem(Player player)
+    {
+        if (!isBasketItem(player.getInventory().getItemInMainHand())) return false;
+
+        player.getInventory().setItemInMainHand(basketItem.create());
+        return  true;
     }
 }

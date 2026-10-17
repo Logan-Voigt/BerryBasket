@@ -23,7 +23,8 @@ public final class VanillaBasketItem implements BasketItem {
         MATERIAL = material;
     }
 
-    public ItemStack Create()
+    @Override
+    public ItemStack create()
     {
         ItemStack item = new ItemStack(MATERIAL);
 
@@ -43,7 +44,8 @@ public final class VanillaBasketItem implements BasketItem {
         return item;
     }
 
-    public boolean IsBasket(ItemStack item)
+    @Override
+    public boolean isBasket(ItemStack item)
     {
         if (item == null || !item.hasItemMeta()) return false;
 

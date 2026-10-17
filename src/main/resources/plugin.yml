@@ -16,3 +16,5 @@ permissions:
     default: op
   berrybasket.give:
     default: op
+  berrybasket.fix:
+    default: true

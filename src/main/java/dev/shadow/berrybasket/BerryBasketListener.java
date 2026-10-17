@@ -1,9 +1,5 @@
 package dev.shadow.berrybasket;
 
-import com.destroystokyo.paper.profile.PlayerProfile;
-import com.destroystokyo.paper.profile.ProfileProperty;
-import com.google.gson.JsonParser;
-import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -17,15 +13,7 @@ import org.bukkit.event.inventory.FurnaceBurnEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.block.Skull;
-import com.destroystokyo.paper.profile.PlayerProfile;
 import org.bukkit.plugin.Plugin;
-
-import java.net.URL;
-
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.List;
 
 public class BerryBasketListener implements Listener {
     private final BasketItem basketItem;
@@ -39,7 +27,7 @@ public class BerryBasketListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onBlockDamage(BlockDamageEvent event)
     {
-        if (!basketItem.IsBasket(event.getItemInHand())) return;
+        if (!basketItem.isBasket(event.getItemInHand())) return;
 
         Block block = event.getBlock();
 
@@ -77,7 +65,7 @@ public class BerryBasketListener implements Listener {
     @EventHandler
     public void onPrepareCraft(PrepareItemCraftEvent event) {
         for (ItemStack item : event.getInventory().getMatrix()) {
-            if (basketItem.IsBasket(item)) {
+            if (basketItem.isBasket(item)) {
                 event.getInventory().setResult(null);
                 return;
             }
@@ -88,7 +76,7 @@ public class BerryBasketListener implements Listener {
     public void onCrafter(CrafterCraftEvent event) {
         if (!(event.getBlock().getState() instanceof Crafter crafter)) return;
         for (ItemStack item : crafter.getInventory().getContents()) {
-            if (basketItem.IsBasket(item)) {
+            if (basketItem.isBasket(item)) {
                 event.setCancelled(true);
                 return;
             }
@@ -97,14 +85,14 @@ public class BerryBasketListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onFuel(FurnaceBurnEvent event) {
-        if (basketItem.IsBasket(event.getFuel())) event.setCancelled(true);
+        if (basketItem.isBasket(event.getFuel())) event.setCancelled(true);
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onMooshroom(PlayerInteractEntityEvent event) {
         if (!(event.getRightClicked() instanceof MushroomCow)) return;
         ItemStack hand = event.getPlayer().getInventory().getItem(event.getHand());
-        if (basketItem.IsBasket(hand)) event.setCancelled(true);
+        if (basketItem.isBasket(hand)) event.setCancelled(true);
     }
 
 
