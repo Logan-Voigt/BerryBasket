@@ -1,6 +1,7 @@
 name: BerryBasket
 version: ${version}
 main: dev.shadow.berrybasket.BerryBasket
+depend: [PyroFarming]
 softdepend: [Nexo]
 api-version: '1.21'
 
