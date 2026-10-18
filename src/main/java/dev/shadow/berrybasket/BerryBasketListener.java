@@ -1,12 +1,11 @@
 package dev.shadow.berrybasket;
 
+import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
+import org.bukkit.block.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDamageEvent;
-import org.bukkit.block.Crafter;
 import org.bukkit.entity.MushroomCow;
 import org.bukkit.event.block.CrafterCraftEvent;
 import org.bukkit.event.inventory.FurnaceBurnEvent;
@@ -50,7 +49,7 @@ public class BerryBasketListener implements Listener {
 
         if (plugin.getConfig().getBoolean("detection.check-head-data", false))
         {
-            // TODO:
+            validSpot = validSpot && hasPyroLibProperty(block);
         }
         return validSpot;
     }
@@ -62,6 +61,19 @@ public class BerryBasketListener implements Listener {
         return below.getType() == Material.FLOWERING_AZALEA_LEAVES;
     }
 
+    private boolean hasPyroLibProperty(Block block)
+    {
+        BlockState state = block.getState();
+        if (state instanceof Skull) {
+            Skull skull = (Skull) state;
+            ResolvableProfile skullProfile = skull.getProfile();
+            if (skullProfile == null) return false;
+
+            return "Pyro-Lib".equals(skullProfile.name());
+
+        }
+        return false;
+    }
     @EventHandler
     public void onPrepareCraft(PrepareItemCraftEvent event) {
         for (ItemStack item : event.getInventory().getMatrix()) {

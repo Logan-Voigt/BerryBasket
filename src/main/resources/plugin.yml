@@ -7,7 +7,7 @@ api-version: '1.21'
 commands:
   berrybasket:
     aliases: [bb]
-    usage: /<command> <reload|get|give>
+    usage: /<command> <reload|get|give|fix>
 
 permissions:
   berrybasket.reload:
