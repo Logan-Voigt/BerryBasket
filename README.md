@@ -1,6 +1,6 @@
 # BerryBasket
 
-![Paper](https://img.shields.io/badge/Paper-1.21.11+-blue)
+![Paper](https://img.shields.io/badge/Paper-1.21.11%2B-blue)
 ![Requires](https://img.shields.io/badge/requires-PyroFarming-orange)
 ![Nexo](https://img.shields.io/badge/Nexo-optional-lightgrey)
 
