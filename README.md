@@ -55,7 +55,7 @@ items:
     id: berry_basket
 
 detection:
-  # Checks that a FLOWERING_AZALEA_LEAVE block is below the head.
+  # Checks that a FLOWERING_AZALEA_LEAVES block is below the head.
   check-below: true
   # Checks for head to have name Pyro-Lib.
   check-head-data: true
