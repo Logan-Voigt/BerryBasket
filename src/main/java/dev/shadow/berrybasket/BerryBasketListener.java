@@ -3,6 +3,7 @@ package dev.shadow.berrybasket;
 import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import org.bukkit.Material;
 import org.bukkit.block.*;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDamageEvent;
@@ -11,6 +12,8 @@ import org.bukkit.event.block.CrafterCraftEvent;
 import org.bukkit.event.inventory.FurnaceBurnEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
@@ -23,6 +26,23 @@ public class BerryBasketListener implements Listener {
         this.basketItem = basketItem;
         this.plugin = plugin;
     }
+
+    @EventHandler
+    public void onInteract(PlayerInteractEvent event)
+    {
+        if (!plugin.getConfig().getBoolean("open-menu-on-shift-right-click", true)) return;
+
+        if (!basketItem.isBasket(event.getItem())) return;
+
+        if (event.getHand() != EquipmentSlot.HAND) return;
+
+        if (!event.getPlayer().isSneaking()) return;
+
+        Player player = event.getPlayer();
+
+        player.performCommand(plugin.getConfig().getString("pyrofarming-menu-command", "pyrofarm menu"));
+    }
+
     @EventHandler(ignoreCancelled = true)
     public void onBlockDamage(BlockDamageEvent event)
     {

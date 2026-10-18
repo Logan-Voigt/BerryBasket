@@ -15,5 +15,9 @@ detection:
   check-head-data: true
   head-textures: []
 
+# Opens PyroFarming menu on shift right click
+open-menu-on-shift-right-click: true
+pyrofarming-menu-command: "pyrofarm menu"
+
 # Tells you what block you are hitting when you hit with bowl. (will be used to find textures for pyrofarming)
 debug: true
