@@ -6,6 +6,8 @@
 
 An addon for PyroFarming that adds a berry basket. Hit a berry on a PyroFarming bush while holding the basket and it breaks instantly.
 
+<img width="426" height="240" alt="Berry Basket Example" src="https://github.com/user-attachments/assets/ec66bd44-674b-4389-940b-4614c9b73924" />
+
 > [!NOTE]
 > BerryBasket is not affiliated with or endorsed by PyroFarming or its developer.
 
@@ -53,7 +55,7 @@ items:
     id: berry_basket
 
 detection:
-  # Checks that a FLOWERING_AZALEA_LEAVE block is below the head.
+  # Checks that a FLOWERING_AZALEA_LEAVES block is below the head.
   check-below: true
   # Checks for head to have name Pyro-Lib.
   check-head-data: true
