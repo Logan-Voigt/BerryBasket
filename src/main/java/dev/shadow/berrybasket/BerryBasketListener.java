@@ -30,6 +30,8 @@ public class BerryBasketListener implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event)
     {
+        if (!event.getAction().isRightClick()) return;
+
         if (!plugin.getConfig().getBoolean("open-menu-on-shift-right-click", true)) return;
 
         if (!basketItem.isBasket(event.getItem())) return;
