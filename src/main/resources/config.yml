@@ -9,15 +9,12 @@ items:
     id: berry_basket
 
 detection:
-  # Checks that an FLOWERING_AZALEA_LEAVE block is below the head.
+  # Checks that a FLOWERING_AZALEA_LEAVES block is below the head.
   check-below: true
+  check-below-material: FLOWERING_AZALEA_LEAVES
   # Checks for head to have name Pyro-Lib.
   check-head-data: true
-  head-textures: []
 
 # Opens PyroFarming menu on shift right click
 open-menu-on-shift-right-click: true
 pyrofarming-menu-command: "pyrofarm menu"
-
-# Tells you what block you are hitting when you hit with bowl. (will be used to find textures for pyrofarming)
-debug: true

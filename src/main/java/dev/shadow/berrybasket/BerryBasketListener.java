@@ -64,7 +64,7 @@ public class BerryBasketListener implements Listener {
 
         if (plugin.getConfig().getBoolean("detection.check-below", true))
         {
-            validSpot = validSpot && isBlockBelowFloweringAzalea(block);
+            validSpot = validSpot && isBlockBelowCorrectBlock(block);
         }
 
         if (plugin.getConfig().getBoolean("detection.check-head-data", false))
@@ -74,11 +74,12 @@ public class BerryBasketListener implements Listener {
         return validSpot;
     }
 
-    private boolean isBlockBelowFloweringAzalea(Block block)
+    private boolean isBlockBelowCorrectBlock(Block block)
     {
         Block below = block.getRelative(BlockFace.DOWN);
 
-        return below.getType() == Material.FLOWERING_AZALEA_LEAVES;
+        return below.getType() == Material.matchMaterial(plugin.getConfig()
+                .getString("detection.check-below-material", "FLOWERING_AZALEA_LEAVES"));
     }
 
     private boolean hasPyroLibProperty(Block block)
